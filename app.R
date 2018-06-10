@@ -7,7 +7,8 @@ toernooi_plaatsen <- c("vlissingen", "zutphen", "arnhem", "utrecht", "leeuwarden
 men_first <- c(F, T, F, T, T, T, T, T)
 have_ticket <- c("Dirk Boehlé / Steven van de Velde", 
                  "Alexander Brouwer / Robert Meeuwsen",
-                 "Jasper Bouter / Christiaan Varenhorst")
+                 "Jasper Bouter / Christiaan Varenhorst",
+                 "Neilton Moises Santos Merces / Harley Marques Silva")
 
 get_top_3_men <- function(n, uitslagen_list) {
   if (length(uitslagen_list[[n]]) > 0) {
