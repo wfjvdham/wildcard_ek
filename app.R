@@ -13,7 +13,11 @@ have_ticket <- c("Dirk Boehlé / Steven van de Velde",
 
 ui <- fluidPage(
   titlePanel("Tussenstand voor de laatste wildcard voor het EK"),
-  p("Hier wordt de tussenstand voor het laatste EK ticket weergegeven."),
+  p("Hier wordt de tussenstand voor het laatste EK ticket weergegeven. 
+    De 4 beste resultaten voor een team zijn bij elkaar opgeteld.
+    max_punten geeft aan hoeveel punten het team maximaal 
+    (met alleen maar eeste plekken in de resterende toernooien)
+    nog kan halen."),
   p("Wanneer er een nieuwe uitslag op eredivisiebeach.nl verschijnt wordt hij automatisch bijgewerkt."),
   p("Het laden kan het even duren..."),
   h1("Vrouwen"),
@@ -74,12 +78,18 @@ server <- function(input, output) {
       slice(1:4) %>%
       summarise(
         punten = sum(points),
-        eerste = sum(positions == 1),
-        tweede = sum(positions == 2),
-        derde = sum(positions == 3),
+        max_punten = as.integer(sum(
+          sort(append(rep(768, 4), .$points), decreasing = TRUE)[1:4]
+        )),
         aantal_deelnames = n()
       ) %>%
-      arrange(desc(punten), eerste, tweede, derde) %>%
+      # summarise(
+      #   eerste = sum(positions == 1),
+      #   tweede = sum(positions == 2),
+      #   derde = sum(positions == 3)
+      # ) %>%
+      arrange(desc(punten)) %>%
+      filter(max(punten) <= max_punten) %>%
       slice(1:6)
   }
   
