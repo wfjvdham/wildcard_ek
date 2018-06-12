@@ -44,11 +44,11 @@ server <- function(input, output) {
     map(html_text)
   
   df <- tibble(
-    team_names = t(as.matrix(team_names)) %>%
+    team_names = team_names %>%
       unlist(),
-    positions = t(as.matrix(positions)) %>%
+    positions = positions %>%
       unlist(),
-    points = t(as.matrix(points)) %>%
+    points = points %>%
       unlist()
   ) %>%
      mutate(points = as.integer(str_sub(points, 1, 3)),
@@ -57,17 +57,20 @@ server <- function(input, output) {
   
   current_gender <- "F"
   df$gender[1] <- current_gender
+  n_toernaments_played <- 1
   for(i in 2:nrow(df)) {
     if (df$positions[i - 1] <= df$positions[i]) {
       df$gender[i] <- current_gender
     } else {
       #print(i)
+      n_toernaments_played <- n_toernaments_played + 1
       if (!i %in% c(25, 49, 74)) {
         current_gender <- if_else(current_gender == "F", "M", "F")
       }
       df$gender[i] <- current_gender
     }
   }
+  n_toernaments_played <- n_toernaments_played / 2
   
   calculate_standings <- function(gender_arg) {
     df %>%
@@ -79,7 +82,7 @@ server <- function(input, output) {
       summarise(
         punten = sum(points),
         max_punten = as.integer(sum(
-          sort(append(rep(768, 4), .$points), decreasing = TRUE)[1:4]
+          sort(append(rep(768, 8 - n_toernaments_played), points), decreasing = TRUE)[1:4]
         )),
         aantal_deelnames = n()
       ) %>%
