@@ -1,2 +1,2 @@
-# wildcard_ek
-Website that shows the current standing for the last wildcard for the EK beachvolleybal
+# Wildcard ek
+Website that shows the current standing for the last wild card for the EK beachvolleybal. It scrapes the necessary data from eredivisiebeach.nl and calculates the current standings by taking the 4 best results of a team. It also calculates the maximum number of point a team can get by winning all the remaining tournaments. This way you can see which teams are still in the running and which not.
