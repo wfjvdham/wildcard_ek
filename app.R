@@ -41,7 +41,8 @@ scrape_data <- function() {
 }
 
 parse_data <- function() {
-  df <- read_rds("./data.rds")
+  df <- read_rds("./data.rds") %>%
+    filter(!is.na(positions))
   
   current_gender <- "F"
   n_toernaments_played <- 1
