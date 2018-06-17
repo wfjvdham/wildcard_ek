@@ -74,8 +74,7 @@ calculate_standings <- function(df, n_toernaments_played, gender_arg) {
       punten = sum(points),
       max_punten = as.integer(sum(
         sort(append(rep(768, 8 - n_toernaments_played), points), decreasing = TRUE)[1:4]
-      )),
-      aantal_deelnames = n()
+      ))
     ) %>%
     # summarise(
     #   eerste = sum(positions == 1),
